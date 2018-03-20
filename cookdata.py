@@ -1,7 +1,6 @@
 # cook_data_scraper.py
 # Contributors:
 #	@dewilliams
-# 	Martin.J.Adamczyk@gmail.com
 #########################################################
 # web service to analyze real estate trends using publicly available docs
 # Test scenario for Cook County, Illinois. 
