@@ -44,4 +44,11 @@ row_count = len(doc_list.find_elements_by_xpath('//*[@id="DocList1_ContentContai
 doc_list = driver.find_element_by_id("DocList1_WidgetContainer")
 for row in range(1,row_count+1):
     doc_list.find_elements_by_xpath('//*[@id="DocList1_ContentContainer1"]/table/tbody/tr[1]/td/div/div[2]/table/tbody/tr['+str(row)+']/td[2]/a')[0].click()
+	#TODO: logic to save data goes here
     doc_list = driver.find_element_by_id("DocList1_WidgetContainer")
+
+
+#TODO: each dropdown list item of interest will be in its own function below
+#TODO: LIS PENDENS function
+#TODO: #DocDetails1_Table_Details data function
+#TODO: #DocDetails1_Panel_GrantorGrantee data function
