@@ -1,6 +1,6 @@
 # cook_data_scraper.py
 # Contributors:
-#	DanielEugeneWilliams@gmail.com
+#	@dewilliams
 # 	Martin.J.Adamczyk@gmail.com
 #########################################################
 # web service to analyze real estate trends using publicly available docs
@@ -22,33 +22,27 @@ from selenium.webdriver.common.action_chains import ActionChains
 
 url = "http://162.217.184.82/i2/default.aspx"
 
-#web_r = requests.get(url)
-web_soup = BeautifulSoup(web_r.text, 'html.parser')
-
-print(web_soup.findAll("#DocList1_WidgetContainer"))
-
 driver = webdriver.Firefox()
 driver.get(url)
-search_menu = driver.find_element_by_id("Navigator1_SearchCriteria1_menuLabel")
-search_menu_hover = ActionChains(firefox).move_to_element(search_menu)
-search_menu_hover.perform()
 
+search_menu = driver.find_element_by_id("Navigator1_SearchCriteria1_menuLabel")
+search_menu_hover = ActionChains(driver).move_to_element(search_menu)
+search_menu_hover.perform()
 search_criteria = driver.find_element_by_id("Navigator1_SearchCriteria1_LinkButton04")
 search_criteria.click()
 
-#TODO: Cycle through #SearchFormEx1_ACSDropDownList_DocumentType
-driver.find_element_by_xpath("//select[@name='SearchFormEx1$ACSDropDownList_DocumentType']/option[text()='ABANDONMENT']").click()
-
+#TODO: Cycle through #SearchFormEx1_ACSDropDownList_DocumentType to get LIS PENDENS
+driver.find_element_by_xpath("//select[@name='SearchFormEx1$ACSDropDownList_DocumentType']/option[text()='LIS PENDENS']").click()
 search_button = driver.find_element_by_id("SearchFormEx1_btnSearch")
 search_button.click()
 
-doclist = driver.find_element_by_id("DocList1_ContentContainer1")
+doc_list = driver.find_element_by_id("DocList1_WidgetContainer")
 
-#TODO: Need to get row count and loop through
+# get row count and loop through
+row_count = len(doc_list.find_elements_by_xpath('//*[@id="DocList1_ContentContainer1"]/table/tbody/tr[1]/td/div/div[2]/table/tbody/tr')) 
+
 # for each row, go to the #DocDetails1_ContentContainer1 -> #DocDetails1_Table_Details
-# check to see if #DocDetails1_ContentContainer1 -> #DocDetails1_GridView_Grantor exists for TRUSTEES DEED
-# check to see if #DocDetails1_ContentContainer1 -> #DocDetails1_Panel_GrantorGrantee exists for POWER OF ATTORNEY
-
-doclist.find_elements_by_xpath('//*[@id="DocList1_ContentContainer1"]/table/tbody/tr/td/div/div/table/tbody/tr[@class="DataGridAlternatingRow"]/td/a[@href]')[1].click()
-
-
+doc_list = driver.find_element_by_id("DocList1_WidgetContainer")
+for row in range(1,row_count+1):
+    doc_list.find_elements_by_xpath('//*[@id="DocList1_ContentContainer1"]/table/tbody/tr[1]/td/div/div[2]/table/tbody/tr['+str(row)+']/td[2]/a')[0].click()
+    doc_list = driver.find_element_by_id("DocList1_WidgetContainer")
