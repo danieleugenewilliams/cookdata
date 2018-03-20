@@ -1,6 +1,7 @@
 # cook_data_scraper.py
-# Original code written by DanielEugeneWilliams@gmail.com
-# Requirements written by martin.j.adamczyk@gmail.com
+# Contributors:
+#	DanielEugeneWilliams@gmail.com
+# 	Martin.J.Adamczyk@gmail.com
 #########################################################
 # web service to analyze real estate trends using publicly available docs
 # Test scenario for Cook County, Illinois. 
@@ -35,7 +36,7 @@ search_menu_hover.perform()
 search_criteria = driver.find_element_by_id("Navigator1_SearchCriteria1_LinkButton04")
 search_criteria.click()
 
-# Cycle through #SearchFormEx1_ACSDropDownList_DocumentType
+#TODO: Cycle through #SearchFormEx1_ACSDropDownList_DocumentType
 driver.find_element_by_xpath("//select[@name='SearchFormEx1$ACSDropDownList_DocumentType']/option[text()='ABANDONMENT']").click()
 
 search_button = driver.find_element_by_id("SearchFormEx1_btnSearch")
@@ -43,7 +44,7 @@ search_button.click()
 
 doclist = driver.find_element_by_id("DocList1_ContentContainer1")
 
-# Need to get row count and loop through
+#TODO: Need to get row count and loop through
 # for each row, go to the #DocDetails1_ContentContainer1 -> #DocDetails1_Table_Details
 # check to see if #DocDetails1_ContentContainer1 -> #DocDetails1_GridView_Grantor exists for TRUSTEES DEED
 # check to see if #DocDetails1_ContentContainer1 -> #DocDetails1_Panel_GrantorGrantee exists for POWER OF ATTORNEY
