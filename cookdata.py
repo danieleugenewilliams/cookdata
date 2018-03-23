@@ -18,32 +18,45 @@ import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
+import time
 
 url = "http://162.217.184.82/i2/default.aspx"
 
 driver = webdriver.Firefox()
 driver.get(url)
+print("url finished")
 
+action = ActionChains(driver)
+time.sleep(5)
 search_menu = driver.find_element_by_id("Navigator1_SearchCriteria1_menuLabel")
-search_menu_hover = ActionChains(driver).move_to_element(search_menu)
-search_menu_hover.perform()
+action.move_to_element(search_menu)
+action.perform()
+print("search_menu finished")
 search_criteria = driver.find_element_by_id("Navigator1_SearchCriteria1_LinkButton04")
+action.move_to_element(search_criteria)
 search_criteria.click()
-
+print("search_crit finished")
+time.sleep(3)
 #TODO: Cycle through #SearchFormEx1_ACSDropDownList_DocumentType to get LIS PENDENS
 driver.find_element_by_xpath("//select[@name='SearchFormEx1$ACSDropDownList_DocumentType']/option[text()='LIS PENDENS']").click()
 search_button = driver.find_element_by_id("SearchFormEx1_btnSearch")
 search_button.click()
-
+time.sleep(3)
+print("search_btn finished")
 doc_list = driver.find_element_by_id("DocList1_WidgetContainer")
-
+print("doc_list1 finished")
 # get row count and loop through
 row_count = len(doc_list.find_elements_by_xpath('//*[@id="DocList1_ContentContainer1"]/table/tbody/tr[1]/td/div/div[2]/table/tbody/tr')) 
-
+print("row_count finished")
+time.sleep(1.5)
 # for each row, go to the #DocDetails1_ContentContainer1 -> #DocDetails1_Table_Details
 doc_list = driver.find_element_by_id("DocList1_WidgetContainer")
+print("doc_list2 finished")
 for row in range(1,row_count+1):
-    doc_list.find_elements_by_xpath('//*[@id="DocList1_ContentContainer1"]/table/tbody/tr[1]/td/div/div[2]/table/tbody/tr['+str(row)+']/td[2]/a')[0].click()
+    print("in loop "+str(row))
+    time.sleep(3)
+    doc_list = driver.find_element_by_id("DocList1_WidgetContainer")	
+    doc_list.find_element_by_xpath('//*[@id="DocList1_ContentContainer1"]/table/tbody/tr[1]/td/div/div[2]/table/tbody/tr['+str(row)+']/td[2]/a').click()
 	#TODO: logic to save data goes here
     doc_list = driver.find_element_by_id("DocList1_WidgetContainer")
 
